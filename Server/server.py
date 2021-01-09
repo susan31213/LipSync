@@ -11,6 +11,7 @@
 import UdpComms as U
 import time
 import io
+import sys
 from Wav2Lip import audio
 from Wav2Lip.inference import datagen, load_model, face_detect
 from os import listdir, path
@@ -73,7 +74,7 @@ print('Using {} for inference.'.format(device))
 model = load_model(args.checkpoint_path, device)
 print("Model loaded")
 
-people_list = ['Images/trump.png', 'Images/englishtsai.png', 'Images/shi.png', 'Images/suga.png', 'Images/wen.png', 'Images/putin.png', 'Images/lisa.png', 'Images/captain.jpg']
+people_list = ['Images/trump.png', 'Images/englishtsai.png', 'Images/shi.png', 'Images/suga.png', 'Images/wen.png', 'Images/putin.png', 'Images/lisa.png', 'Images/captain.jpg', 'Images/teacher.png']
 face_detects = []
 for p in people_list:
     full_frames = [cv2.imread(p)]
@@ -91,17 +92,13 @@ img_to_show = np.zeros((args.img_size,args.img_size), dtype=np.int8)
 
 while True:
     data = sock.ReadReceivedData()  # read data
-    print(sock.dataRX.qsize())
 
-    if data != None:  # if NEW data has been received since last ReadReceivedData function call
+    if data != None:  # if NEW data has been received
         if len(data) == 1:
             who = int.from_bytes(data, byteorder='big')
             continue
-            # print('switch person')
-            # time.sleep(1.0)
         
         timer_start = time.time()
-        # print new received data
         print('received ' + str(len(data)) + 'bytes', ',who:', who)
         f = io.BytesIO(data)
         wav = audio.load_wav(f, 16000)

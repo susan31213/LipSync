@@ -44,6 +44,8 @@ public class UdpSocket : MonoBehaviour
     byte[] coordBuffer;
     byte[] lastCoords;
 
+    public bool inMaskMode = false;
+
 
     public void SendData(string message) // Use to send data to Python
     {
@@ -184,7 +186,10 @@ public class UdpSocket : MonoBehaviour
                     //t2d.LoadRawTextureData(data);
                     RectTransform rt = ReceieveImages[usingImage].GetComponent<RectTransform>();
                     rt.sizeDelta = new Vector2((x2 - x1), (y2 - y1));
-                    rt.anchoredPosition = new Vector2(x1, -y1);
+                    if (!inMaskMode)
+                    {
+                        rt.anchoredPosition = new Vector2(x1, -y1);
+                    }
                     ReceieveImages[usingImage].texture = t2d;
                 }
             }

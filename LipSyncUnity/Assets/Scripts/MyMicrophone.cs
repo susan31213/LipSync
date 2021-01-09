@@ -26,10 +26,10 @@ public class MyMicrophone : MonoBehaviour
         }
         else
         {
-            m_AudioSource.clip = Microphone.Start(Microphone.devices[0], true, m_Length, 16000);
+            m_AudioSource.clip = Microphone.Start(Microphone.devices[2], true, m_Length, 16000);
             m_AudioSource.loop = m_IsLoop;
         }
-        while (!(Microphone.GetPosition(Microphone.devices[0]) > 0)) { }
+        while (!(Microphone.GetPosition(Microphone.devices[2]) > 0)) { }
         m_AudioSource.Play();
         StartCoroutine(GetMicrophoneData());
         StartCoroutine(SendWavDataToServer());
