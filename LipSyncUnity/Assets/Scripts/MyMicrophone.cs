@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class MyMicrophone : MonoBehaviour
@@ -12,6 +14,7 @@ public class MyMicrophone : MonoBehaviour
     UdpSocket socket;
 
     protected AudioSource m_AudioSource;
+    [StringInList(typeof(PropertyDrawersHelper), "AllMicrophones")] public string MicrophoneDevice;
 
     void Start()
     {
@@ -26,10 +29,10 @@ public class MyMicrophone : MonoBehaviour
         }
         else
         {
-            m_AudioSource.clip = Microphone.Start(Microphone.devices[2], true, m_Length, 16000);
+            m_AudioSource.clip = Microphone.Start(MicrophoneDevice, true, m_Length, 16000);
             m_AudioSource.loop = m_IsLoop;
         }
-        while (!(Microphone.GetPosition(Microphone.devices[2]) > 0)) { }
+        while (!(Microphone.GetPosition(MicrophoneDevice) > 0)) { }
         m_AudioSource.Play();
         StartCoroutine(GetMicrophoneData());
         StartCoroutine(SendWavDataToServer());
@@ -88,3 +91,71 @@ public class MyMicrophone : MonoBehaviour
         }
     }
 }
+
+public class StringInList : PropertyAttribute
+{
+    public delegate string[] GetStringList();
+
+    public StringInList(params string[] list)
+    {
+        List = list;
+    }
+
+    public StringInList(Type type, string methodName)
+    {
+        var method = type.GetMethod(methodName);
+        if (method != null)
+        {
+            List = method.Invoke(null, null) as string[];
+        }
+        else
+        {
+            Debug.LogError("NO SUCH METHOD " + methodName + " FOR " + type);
+        }
+    }
+
+    public string[] List
+    {
+        get;
+        private set;
+    }
+}
+
+#if UNITY_EDITOR
+[CustomPropertyDrawer(typeof(StringInList))]
+public class StringInListDrawer : PropertyDrawer
+{
+    // Draw the property inside the given rect
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var stringInList = attribute as StringInList;
+        var list = stringInList.List;
+        if (property.propertyType == SerializedPropertyType.String)
+        {
+            int index = Mathf.Max(0, Array.IndexOf(list, property.stringValue));
+            index = EditorGUI.Popup(position, property.displayName, index, list);
+
+            property.stringValue = list[index];
+        }
+        else if (property.propertyType == SerializedPropertyType.Integer)
+        {
+            property.intValue = EditorGUI.Popup(position, property.displayName, property.intValue, list);
+        }
+        else
+        {
+            base.OnGUI(position, property, label);
+        }
+    }
+}
+public static class PropertyDrawersHelper
+{
+    public static string[] AllMicrophones()
+    {
+        var temp = new List<string>();
+        foreach (string s in Microphone.devices)
+            temp.Add(s);
+        return temp.ToArray();
+    }
+}
+#endif
+
