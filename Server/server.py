@@ -74,9 +74,10 @@ print('Using {} for inference.'.format(device))
 model = load_model(args.checkpoint_path, device)
 print("Model loaded")
 
-people_list = ['Images/trump.png', 'Images/englishtsai.png', 'Images/shi.png', 'Images/suga.png', 'Images/wen.png', 'Images/putin.png', 'Images/lisa.png', 'Images/captain.jpg', 'Images/teacher.png']
+people_list = ['Images/trump.png', 'Images/englishtsai.png', 'Images/shi.png', 'Images/suga.png', 'Images/wen.png', 'Images/putin.png', 'Images/lisa.png', 'Images/captain.jpg', 'Images/teacher.png', 'Images/woman.jpg', 'Images/man.jpg']
 face_detects = []
 for p in people_list:
+    print(p)
     full_frames = [cv2.imread(p)]
     fps = args.fps
     face_det_results = face_detect(full_frames, device, args)

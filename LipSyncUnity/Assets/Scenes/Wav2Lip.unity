@@ -1464,6 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Length: 1
   m_IsLoop: 1
+  MicrophoneDevice: "\u9EA5\u514B\u98A8 (Webcam C110)"
 --- !u!4 &604886649
 Transform:
   m_ObjectHideFlags: 0
@@ -3440,6 +3441,7 @@ MonoBehaviour:
   - {fileID: 774270633}
   - {fileID: 898674114}
   - {fileID: 239507941}
+  inMaskMode: 0
 --- !u!4 &1858940141
 Transform:
   m_ObjectHideFlags: 0
