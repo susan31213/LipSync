@@ -5,7 +5,7 @@ Sync Lip in Unity by Wav2Lip.
 [![LipSync Demo Video](https://drive.google.com/uc?export=view&id=1Y1iQ1PvLV873oMHsXD3nux8S83nNpx-f)](https://youtu.be/THLcyPA4oXw)
 
 ## Prerequisites
-+ Anaconda (Tested on Windows 10)
++ Anaconda
 + (if you want to excute AR Mask mode) Unity 2019.4
 
 ## Dependencies
