@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MaskAR.unity
+    guid: 9e537000b7de7e646a0a9c04da3b85e5
   m_configObjects: {}
