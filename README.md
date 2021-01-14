@@ -28,7 +28,7 @@ Sync Lip in Unity by Wav2Lip.
 + Wait for predicting predefine faces.
 
 ### Client
-+ All of the binary files are built for Win 10.
++ Win 10 binary: [Download](https://drive.google.com/file/d/1dJCe5qFj5leE5BjO2Kwi3S1xWRDnPFQT/view?usp=sharing)
 + To excute audio only mode, excute `LipSyncUnity/Build/Mask.exe`.
 + To excute AR mask mode, open Unity and play this scene: `Scenes/MaskAR`.
 + Choose the microphone you are using, and click `Start Record` button.
